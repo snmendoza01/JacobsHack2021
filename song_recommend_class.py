@@ -1,7 +1,5 @@
 import numpy as np
 import pandas as pd
-import requests
-import sklearn
 
 #The function Julian Made
 def searchProperties(df, id):
@@ -29,6 +27,7 @@ class SongRecom():
         
         #take the average of each property and create a new dictionary
         avg_acoustic = 
+
         for i in range(0,len(self.song_list)):
             
             
