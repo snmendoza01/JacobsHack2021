@@ -13,7 +13,7 @@ track_id = []
 
 file = open("output.txt", 'w')
 
-track_results = sp.search(q='mercury:retrograde', type='track', limit=10)
+track_results = sp.search(q='mercury:retrograde', type='audio-features', limit=10)
 for i, t in enumerate(track_results['tracks']['items']):
     artist_name.append(t['artists'][0]['name'])
     track_name.append(t['name'])
