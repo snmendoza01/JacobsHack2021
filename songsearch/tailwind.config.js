@@ -16,6 +16,7 @@ module.exports = {
             filter: ["dark"],
             ringWidth: ["dark"],
             fill: ["dark"],
+            backgroundColor: ["even"],
         },
     },
     plugins: [],

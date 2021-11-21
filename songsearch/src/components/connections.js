@@ -11,15 +11,32 @@ function SongPOST(valueToSubmit, setReturnedValue) {
         });
 }
 
-function PredictSongsPOST(ids) {
+function PredictSongsPOST(ids, setResponseSongs) {
     axios
-        .post("http://10.72.1.14:5000//predictSongs", JSON.stringify(ids))
+        .post("http://10.72.1.14:5000/predictSongs", {
+            data: JSON.parse(JSON.stringify(ids)),
+        })
         .then((response) => {
-            console.log(response);
+            console.log(response.data);
+            setResponseSongs(response.data);
         })
         .catch((error) => {
             console.error("There was an error!", error);
         });
 }
 
-export { SongPOST, PredictSongsPOST };
+function SubmitRating(sliderValue) {
+    console.log(sliderValue);
+    // axios
+    //     .post("http://10.72.1.14:5000/submitRating", {
+    //         data: JSON.parse(JSON.stringify(ids)),
+    //     })
+    //     .then((response) => {
+    //         console.log(response);
+    //     })
+    //     .catch((error) => {
+    //         console.error("There was an error!", error);
+    //     });
+}
+
+export { SongPOST, PredictSongsPOST, SubmitRating };
