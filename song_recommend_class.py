@@ -11,57 +11,13 @@ sns.set()
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.cluster import KMeans
 
-#The function Julian Made
-def getAudioFeatures(songID):
-    cid = '4bb4bbafa39540db902e05b2e0d60b6a'
-    secret = 'be8a2b6a8d554bacac4f8117db6e2ee4'
-
-    authUrl = 'https://accounts.spotify.com/api/token'
-    baseUrl = 'https://api.spotify.com/v1/'
-
-    authResponse = requests.post(authUrl, {
-        'grant_type' : 'client_credentials',
-        'client_id' : cid,
-        'client_secret' : secret
-    })
-
-    # print(authResponse)
-
-    authResponseData = authResponse.json()
-
-    accessToken = authResponseData['access_token']
-
-    # print(accessToken)
-
-    headers = {'Authorization': 'Bearer {token}'.format(token=accessToken)}
-
-    response = requests.get(baseUrl + 'audio-features/' + songID, headers=headers)
-
-    # print(response)
-
-    response = response.json()
-
-    # print(json.dumps(response))
-    return json.dumps(response)
-
-
 #Class containig array of songs, along with method to compute the recommendation
 class SongRecom():
     
-    def __init__(self,data_file):
+    def __init__(data_file, choosenSongsWithAudioFeatures):
         self.size = 0
-        self.song_list = []
+        self.song_list = choosenSongsWithAudioFeatures
         self.df = pd.read_csv(data_file)
-        
-    #Appends the sound properties of the song to the song list 
-    #Input value: array of the id of each songs
-    #Return value: Void  
-    def get_initial_data(self, id_arr):
-        self.size = len(id_arr)
-        for i in range(0,len(id_arr)):
-            self.song_list.append(json.loads(getAudioFeatures(id_arr[i])))
-            
-        
         
     #Calculates average between all the properties
     #Input Values: None
@@ -109,13 +65,6 @@ class SongRecom():
         return rec[columns][:amount]   
     
 
-arr = ['6ERvoKmAcsxZ4h1FVM69N8', '0rNLaGUleZ91DXMxmZNq5v']
-
-my_obj = SongRecom('spotify_data.csv')
-my_obj.get_initial_data(arr)
-avg = my_obj.calc_average()
-songs = my_obj.recommend()
-print(songs)
 
 
 
