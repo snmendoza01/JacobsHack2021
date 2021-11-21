@@ -22,8 +22,8 @@ from sklearn.cluster import KMeans
 class SongRecom():
     
     def __init__(self,data_file, choosenSongsWithAudioFeatures):
-        self.size = 0
-        self.song_list = []
+        self.song_list = choosenSongsWithAudioFeatures
+        self.size = len(choosenSongsWithAudioFeatures)
         self.df = pd.read_csv(data_file)
         
     #Appends the sound properties of the song to the song list 
@@ -40,14 +40,25 @@ class SongRecom():
     #Input Values: None
     #Return Value: Dictionary    
     def calc_average(self):
+        for i in range(0, self.size):
+            self.song_list[i] = json.loads(self.song_list[i])
         avg = self.song_list[0].copy()
-        keys = list(self.song_list[0].keys())
-        for i in range(0,len(keys)):
-            if(type(self.song_list[0][keys[i]]) != str):
-                avg[keys[i]] = 0
-                for j in range(0,self.size):
-                    avg[keys[i]] = avg[keys[i]]+self.song_list[j][keys[i]]
-                avg[keys[i]] = float(avg[keys[i]]/self.size)
+        for key in avg:
+            avg[key] = 0
+        print(avg)
+        numberOfKeys = len(self.song_list[0])
+        print(numberOfKeys)
+        for key in self.song_list[0]:
+            print("THe key is " + key)
+            print(type(self.song_list[0][key]))
+            if(type(self.song_list[0][key]) == str):
+                avg[key] = 0
+            else:
+                for j in self.song_list:
+                    avg[key] = avg[key]+j[key]
+                print(avg[key])
+                avg[key] = float(avg[key]/self.size)
+        print(avg)
         return avg
     
     def normalize_data(self):
