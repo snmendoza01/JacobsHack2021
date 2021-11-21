@@ -1,9 +1,15 @@
+from flask import Flask
+from flask import render_template
+from flask import request
+from flask_cors import CORS, cross_origin
+import json
+from requests.models import RequestEncodingMixin
+import spotipy
+from spotipy.oauth2 import SpotifyClientCredentials
 import numpy as np
 import pandas as pd
 import requests
 # import optimizing_func
-import requests
-import json
 import seaborn as sns
 from tqdm import tqdm
 import warnings
@@ -11,13 +17,24 @@ sns.set()
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.cluster import KMeans
 
+
 #Class containig array of songs, along with method to compute the recommendation
 class SongRecom():
     
-    def __init__(data_file, choosenSongsWithAudioFeatures):
+    def __init__(self,data_file, choosenSongsWithAudioFeatures):
         self.size = 0
-        self.song_list = choosenSongsWithAudioFeatures
+        self.song_list = []
         self.df = pd.read_csv(data_file)
+        
+    #Appends the sound properties of the song to the song list 
+    #Input value: array of the id of each songs
+    #Return value: Void  
+    def get_initial_data(self, id_arr):
+        self.size = len(id_arr)
+        for i in range(0,len(id_arr)):
+            self.song_list.append(json.loads(getAudioFeatures(id_arr[i])))
+            
+        
         
     #Calculates average between all the properties
     #Input Values: None
@@ -63,12 +80,3 @@ class SongRecom():
         rec = rec.sort_values('distance')
         columns = ['artists', 'name']
         return rec[columns][:amount]   
-    
-
-
-
-
-
-        
-        
-
