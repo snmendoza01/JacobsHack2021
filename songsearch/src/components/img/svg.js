@@ -69,14 +69,39 @@ function SearchSVG() {
     );
 }
 
-function Bubble({ width, height }) {
-    function xValue() {
-        const arr = [
-            1, 3.5, 8, 14, 20, 24, 28, 32, 36, 40, 44, 48, 56, 64, 72, 80, 96,
-        ];
-        return arr[Math.floor(Math.random() * arr.length)];
-    }
+function BubbleBubbleToggleSVG({ setShowBubbles, showBubles }) {
+    return showBubles ? (
+        <svg
+            key="bubblesvg1"
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-8 h-8 text-gray-100 fill-current"
+            viewBox="0 0 24 24"
+            onClick={() => {
+                setShowBubbles(!showBubles);
+            }}
+            fill="#000000"
+        >
+            <path d="M0 0h24v24H0V0z" fill="none" />
+            <path d="M14.59 8L12 10.59 9.41 8 8 9.41 10.59 12 8 14.59 9.41 16 12 13.41 14.59 16 16 14.59 13.41 12 16 9.41 14.59 8zM12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
+        </svg>
+    ) : (
+        <svg
+            key="bubblesvg2"
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-8 h-8 text-gray-100 fill-current"
+            viewBox="0 0 24 24"
+            onClick={() => {
+                setShowBubbles(!showBubles);
+            }}
+            fill="#000000"
+        >
+            <path d="M0 0h24v24H0V0z" fill="none" />
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z" />
+        </svg>
+    );
+}
 
+function Bubble({ width, height }) {
     function randomSpeed() {
         return Math.random() * (15 - 0 + 5) + 5;
     }
@@ -91,28 +116,38 @@ function Bubble({ width, height }) {
     }
 
     return (
-        <motion.svg
-            animate={{ y: -1000 }}
-            initial={{ y: 1000 }}
-            transition={{
-                repeat: Infinity,
-                repeatDelay: repeatDelay(),
-                duration: randomSpeed(),
-            }}
-            xmlns="http://www.w3.org/2000/svg"
-            enableBackground="new 0 0 24 24"
-            className={`fixed w-${width} h-${height} ml-${xValue()} text-gray-${randomColor()} fill-current`}
-            viewBox="0 0 24 24"
-            fill="#000000"
-        >
-            <g>
-                <rect fill="none" height="24" width="24" />
-            </g>
-            <g>
-                <path d="M12,2C6.47,2,2,6.47,2,12c0,5.53,4.47,10,10,10s10-4.47,10-10C22,6.47,17.53,2,12,2z M12,20c-4.42,0-8-3.58-8-8 c0-4.42,3.58-8,8-8s8,3.58,8,8C20,16.42,16.42,20,12,20z" />
-            </g>
-        </motion.svg>
+        <div className="z-0 col-span-1">
+            <motion.svg
+                animate={{ y: -1000 }}
+                initial={{ y: 1000 }}
+                transition={{
+                    repeat: Infinity,
+                    repeatDelay: repeatDelay(),
+                    duration: randomSpeed(),
+                }}
+                xmlns="http://www.w3.org/2000/svg"
+                enableBackground="new 0 0 24 24"
+                className={`absolute z-0 w-${width} h-${height} text-gray-${randomColor()} fill-current`}
+                viewBox="0 0 24 24"
+                fill="#000000"
+            >
+                <g>
+                    <rect fill="none" height="24" width="24" />
+                </g>
+                <g>
+                    <path d="M12,2C6.47,2,2,6.47,2,12c0,5.53,4.47,10,10,10s10-4.47,10-10C22,6.47,17.53,2,12,2z M12,20c-4.42,0-8-3.58-8-8 c0-4.42,3.58-8,8-8s8,3.58,8,8C20,16.42,16.42,20,12,20z" />
+                </g>
+            </motion.svg>
+        </div>
     );
 }
 
-export { SearchSVG, SunSVG, MoonSVG, ArrowLeftSVG, ArrowRightSVG, Bubble };
+export {
+    SearchSVG,
+    SunSVG,
+    MoonSVG,
+    ArrowLeftSVG,
+    ArrowRightSVG,
+    Bubble,
+    BubbleBubbleToggleSVG,
+};

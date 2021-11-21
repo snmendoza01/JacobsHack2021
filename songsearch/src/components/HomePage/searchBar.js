@@ -12,9 +12,11 @@ export default function SearchBar({
         setSearchValue(newValue);
     }
     return (
-        <div className="space-y-4">
-            <p className="text-lg font-bold text-center dark:text-gray-200">
-                Start by imputing a search term....
+        <div className="space-y-4 ">
+            <p className="font-semibold text-center dark:text-gray-200">
+                Input a search term. Once you receive results, you may choose
+                songs that suit you and click "Go". The server will then attempt
+                to find your best.
             </p>
             <div className="flex justify-center space-x-2">
                 <SearchSVG />
